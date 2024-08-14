@@ -11,7 +11,5 @@ public class UserProfile
     public string LastName { get; set; }
     [Required]
     public string Email { get; set; }
-
     public List<Reservation> Reservations { get; set; }
-
 }
