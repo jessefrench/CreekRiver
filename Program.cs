@@ -33,6 +33,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Add endpoints
+// Get campsites
+app.MapGet("/api/campsites", (CreekRiverDbContext db) =>
+{
+    return db.Campsites.ToList();
+});
+
+// Get campsite by id with campsite type
+app.MapGet("/api/campsites/{id}", (CreekRiverDbContext db, int id) =>
+{
+    return db.Campsites.Include(c => c.CampsiteType).Single(c => c.Id == id);
+});
 
 app.Run();
