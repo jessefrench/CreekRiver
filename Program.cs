@@ -42,7 +42,12 @@ app.MapGet("/api/campsites", (CreekRiverDbContext db) =>
 // Get campsite by id with campsite type
 app.MapGet("/api/campsites/{id}", (CreekRiverDbContext db, int id) =>
 {
-    return db.Campsites.Include(c => c.CampsiteType).Single(c => c.Id == id);
+    Campsite campsite = db.Campsites.Include(c => c.CampsiteType).SingleOrDefault(c => c.Id == id);
+    if (campsite == null)
+    {
+        return Results.NotFound();
+    }
+    return Results.Ok(campsite);
 });
 
 // Create campsite
